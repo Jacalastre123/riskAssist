@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&family=Funnel+Display:wght@300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Jersey+10&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            font-family: Alan Sans;
+            margin: auto;
+            display: grid;
+            place-items: center; 
+        }
+
+        div {
+            margin-bottom: 5px;
+            background-color: rgb(130, 178, 226);
+            margin: 0;
+            width: 80%;
+            border-radius: 5px;
+        }
+
+        .attack {
+            height: 25px;
+            width: 25px;
+            background-image: radial-gradient(circle at center, rgb(218, 58, 58), rgb(178, 13, 13));
+            margin: 5px;
+            border-radius: 2px;
+            
+        }
+
+        .defence {
+            height: 25px;
+            width: 25px;
+            background-image: radial-gradient(circle at center, rgb(26, 126, 248), rgb(21, 70, 185));
+            margin: 5px;
+            border-radius: 2px;
+        }
+
+
+
+        h3 {
+            margin: 2px;
+            
+            transition: opacity 0.5s;
+        }
+
+        #container {
+            display: grid;
+         place-items: center;
+         margin: 10px;
+        }
+
+        .attack-row, .defend-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        h4 {
+            font-size: 1.1em
+        }
+
+        h5 {
+            font-size: 3em;
+            margin: 2px;
+        }
+
+        h6 {
+            font-size: 2em;
+            margin: 3px;
+            border-top: 1px solid black;
+            width: 80%;
+        }
+
+        button {
+            background-color: rgb(130, 209, 226);
+            border: 1px solid grey;
+            margin: 3px;
+
+        }
+
+        button:hover {
+            background-color: rgb(130, 178, 226);
+           
+            
+        }
+
+        button:active {
+            background-color: rgb(86, 149, 163);
+           
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <h1>Risk helper</h1>
+    <div id="container">
+        <h4>Card</h4>
+        <h5 id="country">Country</h5>
+        <h6 id="type">Type</h6>
+    </div>
+    <div id="container">
+        <h4>Dice</h4>
+        <div class="attack-row">
+        <div class="attack" onclick="hide(this)">
+            <h3 id="dice1"></h3>
+        </div>
+        <div class="attack" onclick="hide(this)">
+            <h3 id="dice2"></h3>
+        </div>
+        <div class="attack" onclick="hide(this)">
+            <h3 id="dice3"></h3>
+        </div>
+        </div>
+<br>
+<div class="defend-row">
+          <div class="defence" onclick="hide(this)">
+            <h3 id="dice4"></h3>
+        </div>
+        <div class="defence" onclick="hide(this)">
+            <h3 id="dice5"></h3>
+        </div>
+        
+       </div>
+    </div>
+    <nav>
+    <button onclick="pullCard()">Pull Card</button>
+    <button onclick="rollDice()">Roll Dice</button>
+    </nav>
+    <script>
+        const country = document.getElementById("country")
+        const type = document.getElementById("type")
+        const dice1 = document.getElementById("dice1")
+        const dice2 = document.getElementById("dice2")
+        const dice3 = document.getElementById("dice3")
+        const dice4 = document.getElementById("dice4")
+        const dice5 = document.getElementById("dice5")
+       
+        let countryList = {
+            "Japan": "Horse",
+            "China": "Cannon",
+            "Ukraine": "Soldier",
+            "North Africa": "Soldier",
+            "Congo": "Cannon",
+            "Afghanistan": "Soldier",
+            "Middle East": "Cannon",
+            "Venezuela": "Horse",
+            "Southern Europe": "Soldier",
+             "Northern Europe": "Horse",
+             "Greenland": "Horse",
+             "Siam": "Horse",
+             "Itrustk": "Cannon",
+             "India": "Horse",
+             "Alberta": "Cannon",
+             "Egypt": "Horse",
+             "Kamchatka": "Cannon",
+             "Western Europe": "Cannon",
+             "Argentina": "Soldier",
+             "Eastern Australia": "Soldier",
+             "Western Australia": "Cannon",
+            "Madagascar": "Horse",
+            "Siberia": "Soldier",
+            "Ontario": "Cannon",
+            "Central America": "Soldier",
+            "Brazil": "Soldier",
+            "Northwest Territory": "Cannon",
+            "Peru": "Horse",
+            "South Africa": "Cannon",
+            "Western United States": "Cannon",
+            "Quebec": "Cannon",
+            "Great Britain": "Soldier",
+            "Scandinavia": "Soldier",
+            "Mongolia": "Horse",
+            "Ural": "Soldier",
+            "Iceland": "Horse",
+            "Eastern United States": "Cannon",
+            "New Guinea": "Horse",
+            "Alaska": "Cannon"
+
+    }
+    let rolls = new Audio('dice-142528.mp3')
+    let cards = new Audio('card-sounds-35956.mp3')
+    let diceA;
+    let diceB;
+    let diceC;
+    let diceD;
+    let diceE;
+
+     let cDecis;
+
+     let key;
+     let value;
+    function pullCard() {
+        cards.play()
+    cDecis = Math.floor((Math.random() * Object.keys(countryList).length))
+    key = Object.keys(countryList)[cDecis]
+    value = Object.values(countryList)[cDecis]
+    let pair = {name: key, value: value}
+        country.innerHTML = pair.name
+        type.innerHTML = pair.value
+    }
+
+    function rollDice() {
+    diceA = Math.floor((Math.random() * 6) + 1 )
+    diceB = Math.floor((Math.random() * 6) + 1 )
+    diceC = Math.floor((Math.random() * 6) + 1 )
+    diceD = Math.floor((Math.random() * 6) + 1 )
+    diceE = Math.floor((Math.random() * 6) + 1 )
+    rolls.play()
+    dice1.innerHTML = ""
+        dice2.innerHTML = ""
+        dice3.innerHTML = ""
+        dice4.innerHTML = ""
+        dice5.innerHTML = ""
+        let time = setTimeout( function() {
+        dice1.innerHTML = diceA
+        dice2.innerHTML = diceB
+        dice3.innerHTML = diceC
+        dice4.innerHTML = diceD
+        dice5.innerHTML = diceE
+            clearTimeout(time)
+        }, 1000)
+    }
+
+    function hide(div) {
+        div.style.opacity = "0.2"
+
+        div.onclick = function() {
+            div.style.opacity = "1.0"
+            div.onclick = function() {
+                hide(this)
+            }
+        }
+
+    }
+    </script>
+</body>
+</html>
