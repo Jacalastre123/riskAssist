@@ -93,6 +93,24 @@
             background-color: rgb(86, 149, 163);
            
         }
+
+        .close {
+            background-color: powderblue;
+            
+            padding: 20px;
+            border-radius: 40px;
+        }
+
+        .close:hover {
+            background-color: azure;
+            
+            
+        }
+        .close:active {
+            background-color: cyan;
+            
+            
+        }
         
         
     </style>
@@ -131,8 +149,20 @@
     <nav>
     <button onclick="pullCard()">Pull Card</button>
     <button onclick="rollDice()">Roll Dice</button>
+    <button onclick="help()">Items for the board game</button>
     </nav>
-
+    <dialog id="dial">
+         <button onclick="dial.close()" class="close">X</button>
+    <h4>Equipment</h4>
+        <ul>
+           
+    <li>42 card + 2 wildcards</li>
+            <li>The board with 6 continents</li>
+    <li>40 infantry per colour</li>
+     <li>OPTIONAL: Guide</li>
+            </ul>
+        
+    </dialog>
     <p>This game is to replace the cards and dice in RISK, by Jacalastre123</p>
     <script>
         const country = document.getElementById("country")
@@ -142,6 +172,7 @@
         const dice3 = document.getElementById("dice3")
         const dice4 = document.getElementById("dice4")
         const dice5 = document.getElementById("dice5")
+        const dial = document.getElementById("dial")
        
         let countryList = {
             "Japan": "Horse",
@@ -244,6 +275,10 @@
         }
 
     }
+
+        function help() {
+            dial.showModal()
+        }
     </script>
 </body>
 </html>
